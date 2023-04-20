@@ -1,23 +1,33 @@
-import logo from './logo.svg';
 import './App.css';
+import { BrowserRouter, Routes, Route, Link } from 'react-router-dom'
+import UseContext from './Pages/UseContext';
+import HomePage from './Pages/HomePage';
+import ToDoList from './Pages/ToDoList';
+import { createContext, useState } from 'react';
+
+export const AppContext = createContext
 
 function App() {
+
+  const [count, setCount] = useState(0)
+  const appContextValue = {
+    count : count,
+    setCount : setCount
+  }
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <AppContext.Provider value = {appContextValue}>
+      <BrowserRouter>
+      <Link to = '/homePage' element>Home Page</Link>
+      <br></br>
+      <Routes>
+        <Route path = 'useContext' element = {<UseContext />} />
+        <Route path = 'homePage' element = { <HomePage /> }/>
+        <Route path= 'toDoList' element = { <ToDoList /> }/>
+      </Routes>
+      </BrowserRouter>
+      </AppContext.Provider>
     </div>
   );
 }
